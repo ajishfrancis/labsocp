@@ -1,0 +1,95 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: 2019-03-23T05:03:11Z
+  generation: 3
+  labels:
+    app: hello
+  name: hello
+  namespace: schedule-control
+  resourceVersion: "522698"
+  selfLink: /apis/apps.openshift.io/v1/namespaces/schedule-control/deploymentconfigs/hello
+  uid: f4ac4d62-4d28-11e9-9506-52540000fa0a
+spec:
+  replicas: 5
+  revisionHistoryLimit: 10
+  selector:
+    app: hello
+    deploymentconfig: hello
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        app: hello
+        deploymentconfig: hello
+    spec:
+      nodeSelector:
+        region: apps
+      containers:
+      - image: registry.lab.example.com/openshift/hello-openshift@sha256:aaea76ff622d2f8bcb32e538e7b3cd0ef6d291953f3e7c9f556c1ba5baf47e2e
+        imagePullPolicy: Always
+        name: hello
+        ports:
+        - containerPort: 8888
+          protocol: TCP
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - hello
+      from:
+        kind: ImageStreamTag
+        name: hello:latest
+        namespace: schedule-control
+      lastTriggeredImage: registry.lab.example.com/openshift/hello-openshift@sha256:aaea76ff622d2f8bcb32e538e7b3cd0ef6d291953f3e7c9f556c1ba5baf47e2e
+    type: ImageChange
+status:
+  availableReplicas: 5
+  conditions:
+  - lastTransitionTime: 2019-03-23T05:03:18Z
+    lastUpdateTime: 2019-03-23T05:03:18Z
+    message: replication controller "hello-1" successfully rolled out
+    reason: NewReplicationControllerAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: 2019-03-23T05:03:30Z
+    lastUpdateTime: 2019-03-23T05:03:30Z
+    message: Deployment config has minimum availability.
+    status: "True"
+    type: Available
+  details:
+    causes:
+    - type: ConfigChange
+    message: config change
+  latestVersion: 1
+  observedGeneration: 3
+  readyReplicas: 5
+  replicas: 5
+  unavailableReplicas: 0
+  updatedReplicas: 5

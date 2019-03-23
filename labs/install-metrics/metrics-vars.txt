@@ -1,0 +1,11 @@
+# Metrics Variables
+# Append the variables to the [OSEv3:vars] group
+openshift_metrics_install_metrics=True
+openshift_metrics_image_prefix=registry.lab.example.com/openshift3/ose-
+openshift_metrics_image_version=v3.9
+openshift_metrics_heapster_requests_memory=300M
+openshift_metrics_hawkular_requests_memory=750M
+openshift_metrics_cassandra_requests_memory=750M
+openshift_metrics_cassandra_storage_type=pv
+openshift_metrics_cassandra_pvc_size=5Gi
+openshift_metrics_cassandra_pvc_prefix=metrics

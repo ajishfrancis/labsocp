@@ -1,0 +1,6 @@
+#OpenShift Networking Variables
+firewalld_var=true
+API_port_var=443
+console_port_var=443
+app_subdomain_var=apps.lab.example.com
+
